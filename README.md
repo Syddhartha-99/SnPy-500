@@ -1,11 +1,3 @@
-# Project Title
-
-Automated Equal-Weight S&P 500 Index Fund Portfolio Optimization
-
-## Description
-
-This project is designed to automate the process of creating an equal-weight S&P 500 index fund portfolio for a given portfolio size. It uses Python, together with various libraries such as Pandas, Numpy, Requests, and Xlsxwriter. The program fetches stock information for all S&P 500 constituents from Yahoo Finance API, calculates the number of shares to buy based on equal-weight position size, and outputs a recommended trades Excel file.
-
 ## Disclaimer
 
 The information provided by this program is for demonstrative purposes only and should not be considered as financial or investment advice. The program is not intended to provide personalized investment advice or recommendations for any specific individual or portfolio. 
@@ -15,6 +7,18 @@ The program is not affiliated with Yahoo Finance API or any other financial inst
 Investing in stocks carries risk, and the performance of individual stocks and the overall stock market can be volatile and unpredictable. Before making any investment decisions, you should do your own research and consult with a licensed financial advisor or professional.
 
 The author of this program is not responsible for any investment decisions or actions taken based on the information provided by this program. By using this program, you agree to release the author from any liability or damages resulting from your investment decisions or actions.
+
+# Project Title
+
+Automated Equal-Weight S&P 500 Index Fund Portfolio Optimization
+
+## Description
+
+This project is designed to automate the process of creating an equal-weight S&P 500 index fund portfolio for a given portfolio size. It uses Python, together with various libraries such as Pandas, Numpy, Requests, and Xlsxwriter. The program fetches stock information for all S&P 500 constituents from Yahoo Finance API, calculates the number of shares to buy based on equal-weight position size, and outputs a recommended trades Excel file.
+
+## Purpose
+
+The purpose of this project is to provide a simple and automated way to create an equal-weight S&P 500 index fund portfolio for investors. The program fetches the latest stock information from Yahoo Finance API, calculates the number of shares to buy based on equal-weight position size, and outputs a recommended trades file that can be used to buy the selected stocks.
 
 ## Getting Started
 
@@ -53,15 +57,11 @@ python SnPy_500.py
 * Follow the prompts to enter the value of your portfolio and wait for the program to finish running
 * The recommended trades Excel file will be saved in the same directory as `Recommended Trades.xlsx`
 
-## Note on Cache
+### Note on Cache
 
 This program uses a caching mechanism provided by the `requests_cache` library to store the stock information fetched from Yahoo Finance API. This is to prevent excessive API calls and reduce the load on the Yahoo Finance servers.
 
 However, if you need to rerun the program with updated information, you have to delete the cache to ensure that the latest stock information is fetched. This can be done by deleting the `yfinance.cache` file in the same directory as the program.
-
-## Purpose
-
-The purpose of this project is to provide a simple and automated way to create an equal-weight S&P 500 index fund portfolio for investors. The program fetches the latest stock information from Yahoo Finance API, calculates the number of shares to buy based on equal-weight position size, and outputs a recommended trades file that can be used to buy the selected stocks.
 
 ## Limitations
 
