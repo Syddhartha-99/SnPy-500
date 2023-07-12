@@ -13,10 +13,10 @@ from requests_cache import CacheMixin, SQLiteCache
 from requests_ratelimiter import LimiterMixin, MemoryQueueBucket
 from pyrate_limiter import Duration, RequestRate, Limiter
 
-#List of S&P500 constituents
+#get list of S&P500 constituents
 stocks_list = pd.read_csv('sp_500_stocks.csv')
 stocks = " "
-stocks = stocks.join(stocks_list['Ticker'].tolist())
+stocks = stocks.join(stocks_list['Ticker'].tolist()).replace('.', '-')
 
 #Initializes a session to cache scrapped stock information in case of errors
 class CachedLimiterSession(CacheMixin, LimiterMixin, Session):
@@ -38,7 +38,7 @@ final_dataframe = pd.DataFrame(columns = my_columns)
 
 #Looping through all constituents
 for stock in tqdm(stocks_list['Ticker']):
-    current_ticker = tickers.tickers[str.upper(stock)]
+    current_ticker = tickers.tickers[str.upper(stock).replace('.', '-')]
 
     #Find the market capitalization and price of the selected constituent stock
     try:
@@ -78,4 +78,53 @@ for i in range(0, len(final_dataframe.index)):
     except TypeError:
         final_dataframe.loc[i, 'Number of Shares to Buy'] = 'Error'
 
-print(final_dataframe)
+#Excel Output
+writer = pd.ExcelWriter('Recommended Trades.xlsx', engine = 'xlsxwriter')
+
+#Write pandas dataframe to Excel file
+final_dataframe.to_excel(writer, 'Recommended Trades', index = False)
+
+#Excel file format
+background_color = '#0a0a23'
+font_color = '#ffffff'
+
+string_format = writer.book.add_format(
+        {
+            'font_color': font_color,
+            'bg_color': background_color,
+            'border': 1
+        }
+    )
+
+dollar_format = writer.book.add_format(
+        {
+            'num_format':'$0.00',
+            'font_color': font_color,
+            'bg_color': background_color,
+            'border': 1
+        }
+    )
+
+integer_format = writer.book.add_format(
+        {
+            'num_format':'0',
+            'font_color': font_color,
+            'bg_color': background_color,
+            'border': 1
+        }
+    )
+
+#Applying format to Excel File
+column_formats = { 
+                    'A': ['Ticker', string_format],
+                    'B': ['Price', dollar_format],
+                    'C': ['Market Capitalization', dollar_format],
+                    'D': ['Number of Shares to Buy', integer_format]
+                    }
+
+for column in column_formats.keys():
+    writer.sheets['Recommended Trades'].set_column(f'{column}:{column}', 20, column_formats[column][1])
+    writer.sheets['Recommended Trades'].write(f'{column}1', column_formats[column][0], string_format)
+
+#Save Excel File
+writer.close()
