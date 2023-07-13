@@ -82,7 +82,7 @@ We would like to give credit to the creators of the course for providing valuabl
 
 ## Authors
 
-* [Sujin Gurung ↗](https://github.com/Yokai-Productions)
+* [Sujin Gurung ↗](https://github.com/YokaiDev99)
 
 ## License
 
